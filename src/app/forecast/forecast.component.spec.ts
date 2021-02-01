@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ForecastComponent } from './forecast.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { OverlayModule } from '@angular/cdk/overlay';
+
 
 describe('ForecastComponent', () => {
   let component: ForecastComponent;
@@ -8,7 +12,9 @@ describe('ForecastComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ForecastComponent ]
+      declarations: [ ForecastComponent ],
+      imports: [HttpClientTestingModule, OverlayModule, MatDialogModule],
+      providers: [MatDialog]
     })
     .compileComponents();
   }));

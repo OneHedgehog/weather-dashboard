@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ForecastTimeComponent } from './forecast-time.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('ForecastTimeComponent', () => {
   let component: ForecastTimeComponent;
@@ -8,7 +9,8 @@ describe('ForecastTimeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ForecastTimeComponent ]
+      declarations: [ ForecastTimeComponent ],
+      imports: [HttpClientTestingModule]
     })
     .compileComponents();
   }));
