@@ -16,7 +16,7 @@ export class ApiAuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const authorizedReq: HttpRequest<any> = req.clone({
-      url: `${req.url}&apikey=${environment.API_KEY}`
+      url: req.url.split('?').length > 1 ?  `${req.url}&apikey=${environment.API_KEY}` :  `${req.url}?apikey=${environment.API_KEY}`
     });
 
     return next.handle(authorizedReq);

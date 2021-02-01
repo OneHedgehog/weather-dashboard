@@ -5,5 +5,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .mat-form-field-flex {
   background: #424242!important;
+  color: #fff
 }
 
+table {
+  width: 100%;
+}

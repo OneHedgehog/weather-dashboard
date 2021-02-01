@@ -3,16 +3,17 @@
   <mat-form-field class="example-full-width location-input">
     <mat-label>City</mat-label>
     <input type="text"
-           placeholder="Pick one"
-           aria-label="Number"
+           placeholder="Select a city"
+           aria-label="City"
            matInput
            [formControl]="citiesControl"
            [matAutocomplete]="auto">
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <mat-autocomplete #auto="matAutocomplete"  (optionSelected)="onCitySelected($event)">
 
-      <mat-option *ngFor="let city of filteredCities$ | async" [value]="city.AdministrativeArea.LocalizedName">
-        {{city.AdministrativeArea.LocalizedName}}
+      <mat-option *ngFor="let city of filteredCities$ | async" [value]="city.Country.LocalizedName + ', ' + city.AdministrativeArea.LocalizedName + ' (' + city.AdministrativeArea.ID + ')'">
+          {{city.Country.LocalizedName}}, {{city.AdministrativeArea.LocalizedName}} ({{city.AdministrativeArea.ID}})
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
+  <app-forecast [selectedCity]="selectedCity"></app-forecast>
 </form>

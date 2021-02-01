@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  API_URL: 'http://dataservice.accuweather.com/',
+  API_URL: 'http://dataservice.accuweather.com',
   API_VERSION: 'v1',
-  API_KEY: 	'hSVXLlGlhUaHEtR5tzYOPrjJKJAVkQKB'
+  API_KEY: 'zpfcwZkCmoooYOR1h8CTxYEEIFTkF4yP'
 };
 
 /*

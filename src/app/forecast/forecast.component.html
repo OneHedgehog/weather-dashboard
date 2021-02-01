@@ -1,0 +1,61 @@
+<!--test-->
+<!--<app-forecast-time></app-forecast-time>-->
+
+<mat-card class="example-card" *ngIf="(currentForecast$| async ) as currentForecast">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image">
+      <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
+    </div>
+<!--    <mat-card-title>{{selectedCity.AdministrativeArea.LocalizedName}}</mat-card-title>-->
+<!--    <mat-card-subtitle>{{selectedCity.Country.LocalizedName}} ({{currentForecast[0]?.DateTime | date : 'EEEE, MMMM d, y'}})</mat-card-subtitle>-->
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary">Save</button>
+    </mat-card-actions>
+  </mat-card-header>
+
+
+  <table mat-table [dataSource]="currentForecast.DailyForecasts" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="{{forecastColumnDefs.DATE}}">
+      <th mat-header-cell *matHeaderCellDef>{{forecastColumnDefs.DATE}}</th>
+      <td mat-cell *matCellDef="let element"> {{element.Date | date :'dd.mm.yyyy, EE'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="{{forecastColumnDefs.MIN}}">
+      <th mat-header-cell *matHeaderCellDef>{{forecastColumnDefs.MIN}}</th>
+      <td mat-cell *matCellDef="let element"> {{element.Temperature.Minimum.Value}} {{element.Temperature.Minimum.Unit}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="{{forecastColumnDefs.MAX}}">
+      <th mat-header-cell *matHeaderCellDef>{{forecastColumnDefs.MAX}}</th>
+      <td mat-cell *matCellDef="let element"> {{element.Temperature.Maximum.Value}} {{element.Temperature.Maximum.Unit}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="{{forecastColumnDefs.DAY}}">
+      <th mat-header-cell *matHeaderCellDef>{{forecastColumnDefs.DAY}}</th>
+      <td mat-cell *matCellDef="let element">
+        <img src="https://developer.accuweather.com/sites/default/files/{{element.Day.Icon > 10 ? element.Day.Icon : '0' + element.Day.Icon}}-s.png" alt="">
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="{{forecastColumnDefs.NIGHT}}">
+      <th mat-header-cell *matHeaderCellDef>{{forecastColumnDefs.NIGHT}}</th>
+      <td mat-cell *matCellDef="let element">
+        <img src="https://developer.accuweather.com/sites/default/files/{{element.Day.Icon > 10 ? element.Night.Icon : '0' + element.Night.Icon}}-s.png" alt="">
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="{{forecastColumnDefs.TIME_FORECAST}}">
+      <th mat-header-cell *matHeaderCellDef>{{forecastColumnDefs.TIME_FORECAST}}</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button color="accent" (click)="openDaysForecast(element)">Time</button>
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+</mat-card>

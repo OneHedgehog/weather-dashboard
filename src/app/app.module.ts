@@ -10,10 +10,21 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule} from '@angular/mater
 import {MatInputModule} from '@angular/material/input';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ApiAuthInterceptor} from './http-interceptors/api-auth.interceptor';
+import { ForecastComponent } from './forecast/forecast.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTableModule} from '@angular/material/table';
+import {MatIconModule} from '@angular/material/icon';
+import { ForecastDaysComponent } from './forecast/forecast-days/forecast-days.component';
+import { ForecastTimeComponent } from './forecast/forecast-time/forecast-time.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ForecastComponent,
+    ForecastDaysComponent,
+    ForecastTimeComponent
   ],
   imports: [
     BrowserModule,
@@ -24,6 +35,11 @@ import {ApiAuthInterceptor} from './http-interceptors/api-auth.interceptor';
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
+    MatCardModule,
+    MatButtonModule,
+    MatTableModule,
+    MatIconModule,
+    MatDialogModule,
 
     // [TODO] move to shared
     HttpClientModule,
