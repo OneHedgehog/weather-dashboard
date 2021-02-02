@@ -1,10 +1,8 @@
 import {Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges} from '@angular/core';
 import {CitySuggestion} from '../models/city-suggestion';
-import {HttpClient} from '@angular/common/http';
 import {ForecastService} from '../services/forecast.service';
 import {DatePipe} from '@angular/common';
 import {MatDialog} from '@angular/material/dialog';
-import {ForecastDaysComponent} from './forecast-days/forecast-days.component';
 import {ForecastTimeComponent} from './forecast-time/forecast-time.component';
 
 enum FORECAST_COLUMN_DEFS {

@@ -1,75 +1,80 @@
-import { TestBed, async } from '@angular/core/testing';
-import { AppComponent } from './app.component';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {TestBed, async, ComponentFixture} from '@angular/core/testing';
+import {AppComponent} from './app.component';
 import {SearchService} from './services/search.service';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatCardModule} from '@angular/material/card';
-import {MatButtonModule} from '@angular/material/button';
-import {MatTableModule} from '@angular/material/table';
-import {MatIconModule} from '@angular/material/icon';
-import {MatDialogModule} from '@angular/material/dialog';
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {Component, NO_ERRORS_SCHEMA} from '@angular/core';
+import {AppModule} from './app.module';
+import {TestSearchService} from './tests/test-search.service';
 import {By} from '@angular/platform-browser';
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+
+@Component({selector: 'app-forecast', template: ''})
+class ForecastStubComponent {}
+
+let appComponent: AppComponent;
+let appComponentFixture: ComponentFixture<AppComponent>;
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
-
-        MatFormFieldModule,
-        MatInputModule,
-        MatAutocompleteModule,
-        MatCardModule,
-        MatButtonModule,
-        MatTableModule,
-        MatIconModule,
-        MatDialogModule,
-
-        FormsModule,
-        ReactiveFormsModule,
-        NoopAnimationsModule
+        AppModule
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        ForecastStubComponent
       ],
       providers: [
-        SearchService
-      ]
-    }).compileComponents();
+        {
+          provide: SearchService,
+          useClass: TestSearchService
+        },
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
+    }).compileComponents()
+      .then(() => {
+        appComponentFixture = TestBed.createComponent(AppComponent);
+        appComponent = appComponentFixture.componentInstance;
+      });
   }));
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  it('should create the app component', () => {
+    expect(appComponent).not.toBeNull();
+    expect(appComponent.citiesControl).not.toBeNull();
+    expect(appComponent.lastSelectedCities.length).toEqual(0);
+    expect(appComponent.filteredCities$).not.toBeNull();
+    expect(appComponent.selectedCity).toBeFalsy();
   });
 
 
-  it(`should init the app'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.lastSelectedCities.length).toEqual(0);
-  });
+  it(`can get forecast location search input & correct autocomplete options`, () => {
+    const inputElement = appComponentFixture.debugElement.query(By.css('input')); // Returns DebugElement
+    expect(inputElement).not.toBeNull();
+    appComponentFixture.detectChanges();
 
-
-  it('should render title', async () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const inputElement = fixture.debugElement.query(By.css('input')); // Returns DebugElement
     inputElement.nativeElement.dispatchEvent(new Event('focusin'));
-    inputElement.nativeElement.value = 'Tok';
+    inputElement.nativeElement.value = 'Ki';
+    expect(appComponent.lastSelectedCities.length).toEqual(0);
     inputElement.nativeElement.dispatchEvent(new Event('input'));
 
-    fixture.detectChanges();
-    await fixture.whenStable();
-    fixture.detectChanges();
+    expect(appComponent.lastSelectedCities.length).toEqual(5);
+    let matOptions = document.querySelectorAll('mat-option') as NodeListOf<HTMLElement>;
+    expect(matOptions.length).toEqual(0);
 
-    const matOptions = document.querySelectorAll('mat-option');
-    expect(matOptions.length).toBe(10,
-      'Expect to have less options after input text and filter');
+    appComponentFixture.detectChanges();
+    matOptions = document.querySelectorAll('mat-option');
+    expect(matOptions.length).toEqual(5);
+
+
+    const selectedString = matOptions[1].querySelector('span').innerHTML.trim();
+    const fakeEvent: MatAutocompleteSelectedEvent = {
+      option: {
+        value: selectedString
+      }
+    } as MatAutocompleteSelectedEvent;
+
+    expect(appComponent.selectedCity).toBeFalsy();
+    appComponent.onCitySelected(fakeEvent);
+    expect(appComponent.selectedCity).toBeTruthy();
   });
+
 });

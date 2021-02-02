@@ -9,7 +9,6 @@
            [formControl]="citiesControl"
            [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete"  (optionSelected)="onCitySelected($event)">
-
       <mat-option *ngFor="let city of filteredCities$ | async" [value]="city.Country.LocalizedName + ', ' + city.AdministrativeArea.LocalizedName + ' (' + city.AdministrativeArea.ID + ')'">
           {{city.Country.LocalizedName}}, {{city.AdministrativeArea.LocalizedName}} ({{city.AdministrativeArea.ID}})
       </mat-option>

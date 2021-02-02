@@ -43,6 +43,7 @@ export class AppComponent extends Unsubscribe implements OnInit, OnDestroy {
     const selectedValue: string = $autocompleteSelectedEvent.option.value;
     const selectedCityLocalizedName: string = selectedValue.split(' ')[1];
 
+    console.log('from here');
     this.selectedCity = this.lastSelectedCities.find((city: CitySuggestion) => {
       return city.AdministrativeArea.LocalizedName === selectedCityLocalizedName;
     });
