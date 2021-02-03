@@ -14,6 +14,7 @@ export class TestSearchService extends SearchService {
   }
 
   getLocationsAutocomplete(query: string): any {
+    return of([]);
     return of(JSON.parse(mock).filter((city: CitySuggestion) => {
       return city.AdministrativeArea.LocalizedName.includes(query);
     }));
