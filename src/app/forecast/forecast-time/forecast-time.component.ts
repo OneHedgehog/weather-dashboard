@@ -19,7 +19,12 @@ enum FORECAST_COLUMN_DEFS {
 })
 export class ForecastTimeComponent implements OnInit {
   public forecastColumnDefs = FORECAST_COLUMN_DEFS;
-  public displayedColumns: string[] = [FORECAST_COLUMN_DEFS.TIME, FORECAST_COLUMN_DEFS.TEMPERATURE, FORECAST_COLUMN_DEFS.COMMENT, FORECAST_COLUMN_DEFS.ICON];
+  public displayedColumns: string[] = [
+    FORECAST_COLUMN_DEFS.TIME,
+    FORECAST_COLUMN_DEFS.TEMPERATURE,
+    FORECAST_COLUMN_DEFS.COMMENT,
+    FORECAST_COLUMN_DEFS.ICON
+  ];
   public currentForecast$;
 
   constructor(

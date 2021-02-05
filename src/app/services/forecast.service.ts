@@ -421,7 +421,7 @@ export class ForecastService {
   getDaysForecast(cityId: string): any {
     return of(JSON.parse(mockMonths));
 
-    return this.httpClient.get(`${ForecastService.FORECASTS_URL}/${FORECAST_API_METHODS.CURRENT_HOUR}/${cityId}`,{
+    return this.httpClient.get(`${ForecastService.FORECASTS_URL}/${FORECAST_API_METHODS.CURRENT_HOUR}/${cityId}`, {
       params: {
         metric: 'true'
       }
